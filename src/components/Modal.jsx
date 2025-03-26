@@ -1,7 +1,10 @@
 import React from 'react'
-import { RiCloseLine } from 'react-icons/ri';
 import './css/Modal.css'
 import { useNavigate } from 'react-router-dom';
+import * as RiIcons from "react-icons/ri";
+const RiCloseLine = RiIcons.RiCloseLine;
+
+
 
 export default function Modal({setModalOpen}) {
     const navigate=useNavigate();

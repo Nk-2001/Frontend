@@ -15,30 +15,59 @@ export default function Createpost() {
       const notifyA = (msg) => toast.error(msg)
       const notifyB = (msg) => toast.success(msg)
 
-    useEffect(() => {
-// saving post to mongodb after image is uploaded
-              if(url){
-              fetch("http://localhost:5000/createPost",{
-                method:"post",
-                headers:{
-                    "Content-Type":"application/json",
-                    "Authorization":"Bearer " + localStorage.getItem("jwt") 
-                },
-                body:JSON.stringify({
-                    body,
-                    pic:url
-                })
-            }).then(res=>res.json())
-            .then(data=>{if(data.error){
-                notifyA(data.error)
-            }else{
-                notifyB("Successfully Posted!!")
-                navigate('/')
-            }})
-            .catch(err=>console.log(err))
-        }
-    }, [url])
+        //     useEffect(() => {
+        // // saving post to mongodb after image is uploaded
+        //             if(url){
+        //             fetch("https://naveen-gj1x.onrender.com/createPost",{
+        //                 method:"post",
+        //                 headers:{
+        //                     "Content-Type":"application/json",
+        //                     "Authorization":"Bearer " + localStorage.getItem("jwt") 
+        //                 },
+        //                 body:JSON.stringify({
+        //                     body,
+        //                     pic:url
+        //                 })
+        //             }).then(res=>res.json())
+        //             .then(data=>{if(data.error){
+        //                 notifyA(data.error)
+        //             }else{
+        //                 notifyB("Successfully Posted!!")
+        //                 navigate('/')
+        //             }})
+        //             .catch(err=>console.log(err))
+        //         }
+        //     }, [url])
     
+
+        useEffect(() => {
+            if (url) {
+                fetch("https://naveen-gj1x.onrender.com/createPost", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("jwt"),
+                    },
+                    body: JSON.stringify({
+                        body,  // ✅ `body` is now included
+                        pic: url,
+                    }),
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.error) {
+                        notifyA(data.error);
+                    } else {
+                        notifyB("Successfully Posted!!");
+                        navigate("/");  // ✅ `navigate` is now included
+                    }
+                })
+                .catch((err) => console.log(err));
+            }
+        }, [url, body, navigate]); // ✅ Added `body` and `navigate` here
+        
+
+
 
     //posting images to cloudinary first
     const postDetails = ()=>{
